@@ -1,18 +1,15 @@
-use eco_chess::*;
+use capitalist_chess::*;
 use std::{str::FromStr, io::{stdin, stdout, Write}};
 
 fn main() {
     env_logger::init();
 
     let mut board = StateCapitalistBoard::default();
-    // println!("{}", board.is_move_legal(&);
 
     // Loop and read moves from stdin
     loop {
-        // println!("{:?}", SimpleEngine.legal_moves(&board));
         let legal_moves = SimpleEngine.legal_moves(&board);
         for (i, legal_move) in legal_moves.iter().enumerate() {
-            // println!("{legal_move:?}");
             let cost = board.get_bank(board.whose_turn()).get_market().get_move_value(legal_move);
             println!("{i}. {legal_move:?} ({cost})", i=i+1);
         }
@@ -44,7 +41,7 @@ fn main() {
             if board.is_legal_move(&player_move) {
                 println!("Legal move!");
             } else {
-                println!("Illegal move! WOOOOOOOOOO!");
+                println!("Illegal move!");
                 continue;
             }
 

@@ -6,6 +6,7 @@ use rayon::prelude::*;
 
 /// Return all the combinations of moves where the total cost of the moves
 /// is affordable to the given bank.
+#[allow(dead_code)]
 fn affordable_combinations(moves: Vec<Move>, bank: &Bank, board: &StateCapitalistBoard) -> Vec<Move> {
     let max_moves = bank.get_balance() / bank.get_market().get_base_move_cost();
     let mut result = Vec::new();
