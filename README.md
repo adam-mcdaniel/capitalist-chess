@@ -10,7 +10,7 @@ The rules are the same as in traditional chess, with the following exceptions:
 1. The game is played by two players, each representing their own nation-state.
 2. Each nation-state has a national bank, which is used to fund the war effort.
     - Nation-states start with a base amount of currency **(measured in 1¢ pennies or 10¢ doubloons)**.
-    - Nation-states receive additional currency at the end of their turn based on their controlled territory, measured by the number of 2x2 "sectors" they control. The four center sectors are each worth 2 doubloons per turn (20¢), and the remaining 12 sectors are each worth 1 doubloon per turn (10¢).
+    - Nation-states receive additional currency at the end of their turn by taxing their controlled territories: the 2x2 "sectors" they control. The four center sectors are each worth 2 doubloons per turn (20¢), and the remaining 12 sectors are each worth 1 doubloon per turn (10¢).
 3. Nation-states can use their currency to purchase additional pieces, which must be purchased on their two "home rows" (rows 1 and 2 for white, rows 7 and 8 for black).
 4. Nation-states may play multiple moves per turn, *for an exponential cost*.
     - Each move has a base cost of 1 doubloon, and each additional move accrues interest at a rate of 200%. For example, the first move costs 1 doubloon, the second move costs 2 doubloons, the third move costs 4 doubloons, and so on.
