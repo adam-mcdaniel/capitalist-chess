@@ -21,7 +21,7 @@ The rules are the same as in traditional chess, with the following exceptions:
 |---|---|
 |Pawn ♟︎|2 doubloons|
 |Knight ♞|6 doubloons|
-|Bishop ♝|6.3 doubloons|
+|Bishop ♝|6.2 doubloons|
 |Rook ♜|10 doubloons|
 |Queen ♛|18 doubloons|
 |King ♚|200 doubloons|
