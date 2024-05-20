@@ -41,6 +41,16 @@ cargo run --release
 
 This will start a game with the default settings, playing against a greedy capitalist AI with a move depth of 4.
 
+![Gameplay](assets/gameplay.png)
+
+### Controls
+
+Moves can be entered in algebraic notation. For example, to move the pawn at e2 to e4, you would enter `e2e4`. You can also enter just `e4` to allow the engine to infer which pawn to move.
+
+To purchase a piece, enter `$` followed by the piece type and the square to place the piece. For example, to purchase a knight on e1, you would enter `$Ne1`.
+
+To play multiple moves in order, separate the moves with a space. For example, to move the pawn at e2 to e4 and then purchase a knight on e1, you would enter `e2e4 $Ne1`.
+
 ## Usage as a Library
 
 You can write your own interface to the game engine by using it as a library. Here's an example program which does this.

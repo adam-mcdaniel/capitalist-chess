@@ -165,10 +165,10 @@ impl Debug for Move {
 
             Self::Many(moves) => {
                 for (i, m) in moves.iter().enumerate() {
-                    if i != 0 {
-                        write!(f, " ")?;
-                    }
                     write!(f, "{:?}", m)?;
+                    if i < moves.len() {
+                        write!(f, ", ")?;
+                    }
                 }
             },
         }

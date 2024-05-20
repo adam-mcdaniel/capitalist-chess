@@ -47,7 +47,7 @@ pub trait Engine: Send + Sync {
 
     /// Return the best move for the given board.
     fn best_move(&self, board: &StateCapitalistBoard) -> Option<Move> {
-        let (score, best_move) = self.minimax(board, 4, board.whose_turn(), None);
+        let (score, best_move) = self.minimax(board, 1, board.whose_turn(), None);
         eprintln!("Score: {}", score);
         Some(best_move)
     }

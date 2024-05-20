@@ -1,4 +1,4 @@
-use log::info;
+use log::{info, error};
 
 mod currency;
 pub use currency::Currency;
@@ -95,19 +95,19 @@ impl StateCapitalistBoard {
             Move::Purchase { to, .. } => {
                 // First, confirm the "to" tile is empty
                 if self.board.has_piece_on(*to) {
-                    eprintln!("Tile is not empty!");
+                    error!("Tile is not empty!");
                     return false;
                 }
 
                 if !to.get_sector().is_home_for(whose_turn) {
-                    eprintln!("Tile is not in the home sector!");
+                    error!("Tile is not in the home sector!");
                     return false;
                 }
 
                 // Next, confirm the player can afford the piece
                 let result = self.get_bank(whose_turn).can_afford(player_move) && self.board.is_legal_move(player_move);
                 if !result {
-                    eprintln!("Player cannot afford to purchase!");
+                    error!("Player cannot afford to purchase!");
                 }
                 result
             },
@@ -115,17 +115,20 @@ impl StateCapitalistBoard {
                 // Confirm the player can afford to pass
                 let result = self.get_bank(whose_turn).can_afford(player_move);
                 if !result {
-                    eprintln!("Player cannot afford to pass!");
+                    error!("Player cannot afford to pass!");
                 }
                 result
             }
             Move::Many(moves) => {
                 let mut copy = self.clone();
-                for player_move in moves {
+                for (i, player_move) in moves.iter().enumerate() {
+                    copy.board.set_turn(self.whose_turn());
                     if !copy.is_legal_move(player_move) {
+                        error!("Illegal move #{i} {player_move:?} move!");
                         return false;
                     }
-                    copy.apply(player_move.clone()).unwrap();
+                    copy.board.set_turn(self.whose_turn());
+                    copy.apply_without_census(player_move.clone()).unwrap();
                 }
                 true
             },
@@ -153,6 +156,21 @@ impl StateCapitalistBoard {
 
         self.board.apply(player_move)?;
         self.perform_census_for_color(!whose_turn);
+        Ok(())
+    }
+
+    /// This applies a move without performing a census.
+    /// This is used to perform partial moves, without updating the bank.
+    fn apply_without_census(&mut self, player_move: Move) -> Result<(), ()> {
+        if !self.is_legal_move(&player_move) {
+            eprintln!("Illegal move!!!!");
+            return Err(())
+        }
+        let whose_turn = self.whose_turn();
+        // Purchase the move
+        self.get_bank_mut(whose_turn).purchase(&player_move)?;
+
+        self.board.apply(player_move)?;
         Ok(())
     }
 
