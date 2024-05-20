@@ -31,6 +31,8 @@ The rules are the same as in traditional chess, with the following exceptions:
     - The nation-state has no pieces remaining.
     - The nation-state is bankrupt and can no longer afford the war effort.
 
+![Battle](assets/battle.png)
+
 ## Setup
 
 To play the game, clone the repository and run the following command:
