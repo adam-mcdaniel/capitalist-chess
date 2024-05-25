@@ -74,9 +74,9 @@ impl Display for Currency {
         }
 
         if self.is_debt() {
-            write!(f, "-¢{}", self.amount)
+            write!(f, "-{}¢", self.amount)
         } else {
-            write!(f, "¢{}", self.amount)
+            write!(f, "{}¢", self.amount)
         }
     }
 }

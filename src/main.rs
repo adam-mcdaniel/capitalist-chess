@@ -4,6 +4,9 @@ use std::{str::FromStr, io::{stdin, stdout, Write}};
 fn main() {
     env_logger::init();
 
+    // Set the thread stack size with rayon
+    rayon::ThreadPoolBuilder::new().stack_size(1024 * 1024 * 1024).build_global().unwrap();
+
     let mut board = StateCapitalistBoard::default();
 
     // Loop and read moves from stdin

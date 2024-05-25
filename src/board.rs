@@ -1,6 +1,6 @@
 use super::*;
 use core::fmt::{Display, Formatter, Result as FmtResult};
-use log::{warn, info, debug, trace};
+use log::{warn, info, debug, trace, error};
 
 
 /// Move a bit from one tile to another in the given bitboard.
@@ -189,37 +189,37 @@ impl Board {
         let mut bits = 0;
         bits |= self.white_pawns;
         if bits & self.white_knights != 0 {
-            debug!("White knights overlap with other white pieces");
+            error!("White knights overlap with other white pieces");
             return Err(());
         }
         bits |= self.white_knights;
         if bits & self.white_bishops != 0 {
-            debug!("White bishops overlap with other white pieces");
+            error!("White bishops overlap with other white pieces");
             return Err(());
         }
         bits |= self.white_bishops;
         if bits & self.white_rooks != 0 {
-            debug!("White rooks overlap with other white pieces");
+            error!("White rooks overlap with other white pieces");
             return Err(());
         }
         bits |= self.white_rooks;
         if bits & self.white_queens != 0 {
-            debug!("White queens overlap with other white pieces");
+            error!("White queens overlap with other white pieces");
             return Err(());
         }
         bits |= self.white_queens;
         if bits & self.white_king != 0 {
-            debug!("White king overlaps with other white pieces");
+            error!("White king overlaps with other white pieces");
             return Err(());
         }
         bits |= self.white_king;
         if bits & self.black_pawns != 0 {
-            debug!("Black pawns overlap with other black pieces");
+            error!("Black pawns overlap with other black pieces");
             return Err(());
         }
         bits |= self.black_pawns;
         if bits & self.black_knights != 0 {
-            debug!("Black knights overlap with other black pieces");
+            error!("Black knights overlap with other black pieces");
             return Err(());
         }
         bits |= self.black_knights;
@@ -229,63 +229,63 @@ impl Board {
         }
         bits |= self.black_bishops;
         if bits & self.black_rooks != 0 {
-            debug!("Black rooks overlap with other black pieces");
+            error!("Black rooks overlap with other black pieces");
             return Err(());
         }
         bits |= self.black_rooks;
         if bits & self.black_queens != 0 {
-            debug!("Black queens overlap with other black pieces");
+            error!("Black queens overlap with other black pieces");
             return Err(());
         }
         bits |= self.black_queens;
         if bits & self.black_king != 0 {
-            debug!("Black king overlaps with other black pieces");
+            error!("Black king overlaps with other black pieces");
             return Err(());
         }
 
         // Check if king is off square, and if we still have castling rights
         if self.white_king != Tile::king_start_position(Color::White).to_bit() {
             if self.castling_rights.can_castle(Tile::king_start_position(Color::White), Tile::new(Rank::BACK_RANK_WHITE, File::H)) {
-                debug!("White king is off square, but still has castling rights");
+                error!("White king is off square, but still has castling rights");
                 return Err(());
             }
             if self.castling_rights.can_castle(Tile::king_start_position(Color::White), Tile::new(Rank::BACK_RANK_WHITE, File::A)) {
-                debug!("White king is off square, but still has castling rights");
+                error!("White king is off square, but still has castling rights");
                 return Err(());
             }
         }
         if self.black_king != Tile::king_start_position(Color::Black).to_bit() {
             if self.castling_rights.can_castle(Tile::king_start_position(Color::Black), Tile::new(Rank::BACK_RANK_BLACK, File::H)) {
-                debug!("Black king is off square, but still has castling rights");
+                error!("Black king is off square, but still has castling rights");
                 return Err(());
             }
             if self.castling_rights.can_castle(Tile::king_start_position(Color::Black), Tile::new(Rank::BACK_RANK_BLACK, File::A)) {
-                debug!("Black king is off square, but still has castling rights");
+                error!("Black king is off square, but still has castling rights");
                 return Err(());
             }
         }
         // Check if rook is off square, and if we still have castling rights
         if self.white_rooks & Tile::new(Rank::BACK_RANK_WHITE, File::H).to_bit() == 0 {
             if self.castling_rights.can_castle(Tile::king_start_position(Color::White), Tile::new(Rank::BACK_RANK_WHITE, File::H)) {
-                debug!("White rook is off square, but still has castling rights");
+                error!("White rook is off square, but still has castling rights");
                 return Err(());
             }
         }
         if self.white_rooks & Tile::new(Rank::BACK_RANK_WHITE, File::A).to_bit() == 0 {
             if self.castling_rights.can_castle(Tile::king_start_position(Color::White), Tile::new(Rank::BACK_RANK_WHITE, File::A)) {
-                debug!("White rook is off square, but still has castling rights");
+                error!("White rook is off square, but still has castling rights");
                 return Err(());
             }
         }
         if self.black_rooks & Tile::new(Rank::BACK_RANK_BLACK, File::H).to_bit() == 0 {
             if self.castling_rights.can_castle(Tile::king_start_position(Color::Black), Tile::new(Rank::BACK_RANK_BLACK, File::H)) {
-                debug!("Black rook is off square, but still has castling rights");
+                error!("Black rook is off square, but still has castling rights");
                 return Err(());
             }
         }
         if self.black_rooks & Tile::new(Rank::BACK_RANK_BLACK, File::A).to_bit() == 0 {
             if self.castling_rights.can_castle(Tile::king_start_position(Color::Black), Tile::new(Rank::BACK_RANK_BLACK, File::A)) {
-                debug!("Black rook is off square, but still has castling rights");
+                error!("Black rook is off square, but still has castling rights");
                 return Err(());
             }
         }
@@ -294,7 +294,7 @@ impl Board {
         // it must be on the 3rd or 6th rank
         if let Some(en_passant) = self.en_passant {
             if en_passant.get_rank() != Rank::PAWN_STARTER_WHITE.advance(Color::White, 1) && en_passant.get_rank() != Rank::PAWN_STARTER_BLACK.advance(Color::Black, 1) {
-                debug!("En passant is on an invalid square at {:?}", en_passant);
+                error!("En passant is on an invalid square at {:?}", en_passant);
                 return Err(());
             }
 
@@ -304,22 +304,27 @@ impl Board {
             let pawn_tile = en_passant.advance(color, 1);
 
             if self.get_piece(pawn_tile) != Some(Piece::pawn(color)) {
-                debug!("There is no {:?} pawn right at {pawn_tile:?} past the en passant square at {en_passant:?}", color);
+                error!("There is no {:?} pawn right at {pawn_tile:?} past the en passant square at {en_passant:?}", color);
                 return Err(());
             }
         }
 
+        /*
+        // UNNECESSARY CHECK,
+        // since players can purchase pieces on their back rank
+
         // Confirm there are no pawns on the back ranks
         for i in 0..File::RIGHTMOST.get_index() {
             if self.white_pawns & Tile::new(Rank::BACK_RANK_WHITE, File::from_index(i)).to_bit() != 0 {
-                debug!("White pawn on back rank, it should be promoted");
+                error!("White pawn on back rank, it should be promoted");
                 return Err(());
             }
             if self.black_pawns & Tile::new(Rank::BACK_RANK_BLACK, File::from_index(i)).to_bit() != 0 {
-                debug!("Black pawn on back rank, it should be promoted");
+                error!("Black pawn on back rank, it should be promoted");
                 return Err(());
             }
         }
+         */
 
         Ok(())
     }
@@ -838,7 +843,10 @@ impl Board {
     pub fn is_legal_piece_move(&self, from: Tile, to: Tile) -> bool {
         info!("Checking if piece move from {from} to {to} is legal");
         if INSERT_SANITY_CHECKS {
-            assert!(self.sanity_check().is_ok());
+            if self.sanity_check().is_err() {
+                error!("{self}");
+                panic!("Board is in an invalid state");
+            }
         }
         // Get piece at source and destination
         let src_piece = self.get_piece(from);
