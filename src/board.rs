@@ -1583,8 +1583,14 @@ impl Display for Board {
         let alt_primary_color = "\x1b[0;41m";
         // Blue
         let alt_secondary_color = "\x1b[0;44m";
+        write!(f, " ")?;
+        for file in 0..8 {
+            write!(f, " {}", File::from_index(file))?;
+        }
+        write!(f, "\n")?;
         for rank in (0..8).rev() {
             // Store the pieces in the rank in the result.
+            write!(f, "{} ", rank + 1)?;
             for file in 0..8 {
                 // is en-passant square?
                 let tile = Tile::new(Rank::from_index(rank), File::from_index(file));
@@ -1625,8 +1631,13 @@ impl Display for Board {
                 // Reset the color
                 write!(f, "\x1b[0m")?;
             }
-            write!(f, "\n")?;
+            write!(f, " {}\n", rank + 1)?;
         }
+        write!(f, " ")?;
+        for file in 0..8 {
+            write!(f, " {}", File::from_index(file))?;
+        }
+        write!(f, "\n")?;
         Ok(())
     }
 }
